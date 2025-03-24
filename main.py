@@ -13,7 +13,6 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///employees.db'
 app.config['JWT_SECRET_KEY'] = 'your_secret_key'  # Change this to a secure secret key
 app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(hours=1)  # Token expires in 1 hour
 
-
 # Add CORS middleware
 CORS(app, supports_credentials=True)
 
@@ -303,6 +302,7 @@ def get_attendance(emp_id):
     print("attendance_by_status", attendance_by_status)
     return jsonify(attendance_by_status)
 
+
 # API to delete an attendance record (Protected)
 @app.route('/attendance/<int:emp_id>', methods=['DELETE'])
 @admin_required
@@ -356,6 +356,7 @@ def bulk_add_attendance():
     except Exception as e:
         db.session.rollback()
         return jsonify({"error": str(e)}), 400
+
 
 # API to execute custom queries
 @app.route('/query', methods=['POST'])
