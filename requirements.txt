@@ -4,3 +4,5 @@ Flask-SQLAlchemy
 SQLAlchemy
 Werkzeug
 Flask-CORS
+gunicorn
+PyNaCl
