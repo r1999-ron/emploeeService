@@ -161,7 +161,7 @@ def register_employee():
 
 
 # API to get an employee by ID (Protected)
-@app.route('/employees/<int:emp_id>', methods=['GET'])
+@app.route('/employees/<int:emp_id>', methods=['POST'])
 @admin_required
 def get_employee_by_id(emp_id):
     employee = Employee.query.get(emp_id)
@@ -184,7 +184,7 @@ def get_employee_by_id(emp_id):
 
 
 # API to get all employees (Protected)
-@app.route('/employees', methods=['GET'])
+@app.route('/employees', methods=['POST'])
 @admin_required
 def get_all_employees():
     phone_number = request.args.get("phone")
