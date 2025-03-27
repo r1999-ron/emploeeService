@@ -364,6 +364,7 @@ def get_attendance(emp_id):
     else:
         end_date = datetime.today().date()
     # Fetch attendance records for the employee within the specified date range
+    print(start_date, end_date)
     records = Attendance.query.filter(Attendance.empId == emp_id, Attendance.date >= start_date, Attendance.date <= end_date).all()
 
     # Initialize a dictionary to group dates by status
