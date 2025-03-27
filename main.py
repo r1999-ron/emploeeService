@@ -344,10 +344,27 @@ def add_or_update_attendance():
 @admin_required
 def get_attendance(emp_id):
     days = int(request.args.get('days', 1))
-    start_date = datetime.today().date() - timedelta(days=days - 1)
+    if request.args.get('from'):
+        from_date = datetime.strptime(request.args.get('from'), '%Y-%m-%d').date()
+    else:
+        from_date = None
 
+    if request.args.get('to'):
+        to_date = datetime.strptime(request.args.get('to'), '%Y-%m-%d').date()
+    else:
+        to_date = None
+
+    if from_date:
+        start_date = from_date
+    else:
+        start_date = datetime.today().date() - timedelta(days=days - 1)
+
+    if to_date:
+        end_date = to_date
+    else:
+        end_date = datetime.today().date()
     # Fetch attendance records for the employee within the specified date range
-    records = Attendance.query.filter(Attendance.empId == emp_id, Attendance.date >= start_date).all()
+    records = Attendance.query.filter(Attendance.empId == emp_id, Attendance.date >= start_date, Attendance.date <= end_date).all()
 
     # Initialize a dictionary to group dates by status
     attendance_by_status = {"PRESENT": [], "ABSENT": [], "WFH": []}
@@ -391,7 +408,6 @@ def get_attendance(emp_id):
             "max_allowed_leaves": 24
         }
     }
-
     return jsonify(response)
 
 
