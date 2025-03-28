@@ -775,11 +775,12 @@ def update_request_status(request_id):
 
 
 # Comprehensive API to get requests with various filters
-@app.route('/request-approvals', methods=['POST'])
+@app.route('/get-all-request', methods=['POST'])
 @admin_required
 def get_requests():
     try:
         # Get all possible filter parameters
+        print(request)
         request_id = request.args.get('id')
         requester_emp_id = request.args.get('requesterEmpId')
         approver_emp_id = request.args.get('approverEmpId')
