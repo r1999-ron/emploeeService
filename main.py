@@ -161,7 +161,7 @@ def register_employee():
 
 
 # API to get an employee by ID (Protected)
-@app.route('/employees/<int:emp_id>', methods=['GET'])
+@app.route('/employees/<int:emp_id>', methods=['POST'])
 @admin_required
 def get_employee_by_id(emp_id):
     employee = Employee.query.get(emp_id)
@@ -184,7 +184,7 @@ def get_employee_by_id(emp_id):
 
 
 # API to get all employees (Protected)
-@app.route('/employees', methods=['GET'])
+@app.route('/employees', methods=['POST'])
 @admin_required
 def get_all_employees():
     phone_number = request.args.get("phone")
@@ -364,6 +364,7 @@ def get_attendance(emp_id):
     else:
         end_date = datetime.today().date()
     # Fetch attendance records for the employee within the specified date range
+    print(start_date, end_date)
     records = Attendance.query.filter(Attendance.empId == emp_id, Attendance.date >= start_date, Attendance.date <= end_date).all()
 
     # Initialize a dictionary to group dates by status
@@ -774,11 +775,12 @@ def update_request_status(request_id):
 
 
 # Comprehensive API to get requests with various filters
-@app.route('/request-approvals', methods=['POST'])
+@app.route('/get-all-request', methods=['POST'])
 @admin_required
 def get_requests():
     try:
         # Get all possible filter parameters
+        print(request)
         request_id = request.args.get('id')
         requester_emp_id = request.args.get('requesterEmpId')
         approver_emp_id = request.args.get('approverEmpId')
