@@ -878,7 +878,7 @@ def delete_pending_request(request_id):
         if not request_approval:
             return jsonify({"error": "Request not found"}), 404
 
-        # Check if request is in PENDING state
+        # Check if request is in PENDING state or not
         if request_approval.requestStatus != "PENDING":
             return jsonify({
                 "error": "Cannot delete request",
